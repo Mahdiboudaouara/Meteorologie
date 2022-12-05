@@ -116,25 +116,31 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  // Widget _title() {
+  //   return RichText(
+  //     textAlign: TextAlign.center,
+  //     text: TextSpan(
+  //         text: 'd',
+  //         style: TextStyle(
+  //             fontSize: 30,
+  //             fontWeight: FontWeight.w700,
+  //             color: Color(0xffe46b10)),
+  //         children: [
+  //           TextSpan(
+  //             text: 'ev',
+  //             style: TextStyle(color: Colors.black, fontSize: 30),
+  //           ),
+  //           TextSpan(
+  //             text: 'rnz',
+  //             style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
+  //           ),
+  //         ]),
+  //   );
+  // }
   Widget _title() {
-    return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'd',
-          style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w700,
-              color: Color(0xffe46b10)),
-          children: [
-            TextSpan(
-              text: 'ev',
-              style: TextStyle(color: Colors.black, fontSize: 30),
-            ),
-            TextSpan(
-              text: 'rnz',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 30),
-            ),
-          ]),
+    return Container(
+      child: Image(image: AssetImage('../../images/logo.png')),
+      width: 100,
     );
   }
 
