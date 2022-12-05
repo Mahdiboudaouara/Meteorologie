@@ -221,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
   // }
   Widget _title() {
     return Container(
-      child: Image(image: AssetImage('../../images/logo.png')),
+      child: Image(image: AssetImage('images/logo.png')),
       width: 100,
     );
   }

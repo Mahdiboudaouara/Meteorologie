@@ -139,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
   // }
   Widget _title() {
     return Container(
-      child: Image(image: AssetImage('../../images/logo.png')),
+      child: Image(image: AssetImage('images/logo.png')),
       width: 100,
     );
   }
