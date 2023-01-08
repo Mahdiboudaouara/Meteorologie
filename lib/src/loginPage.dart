@@ -3,7 +3,7 @@ import 'package:flutter_application_1/src/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'Widget/bezierContainer.dart';
-import 'mapPage.dart';
+import 'map.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key, this.title}) : super(key: key);
