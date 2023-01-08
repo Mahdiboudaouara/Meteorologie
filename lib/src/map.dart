@@ -4,6 +4,7 @@ import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:flutter_application_1/src/display.dart';
 
 class MyMapPage extends StatefulWidget {
   @override
@@ -150,14 +151,20 @@ class MyMapPageState extends State<MyMapPage> {
                                       "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
                                 ),
                                 ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Color.fromARGB(
+                                                  255, 251, 180, 72)),
+                                    ),
                                     onPressed: () => {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      LoginPage())),
+                                                      WeatherForecast())),
                                         },
-                                    child: Text("press me"))
+                                    child: Text(" Show more details"))
                               ],
                             ),
                           ),
