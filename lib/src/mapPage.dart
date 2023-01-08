@@ -13,26 +13,27 @@ class MyMapPage extends StatefulWidget {
 
 class MyMapPageState extends State<MyMapPage> {
   Position currentPosition = Position(
-      longitude: 10.1764213,
-      latitude: 36.8917461,
+      longitude: 0,
+      latitude: 0,
       timestamp: DateTime.now(),
       accuracy: 0,
       altitude: 0,
       heading: 0,
       speed: 0,
       speedAccuracy: 0);
-  /*getCurrentLocation() {
+  getCurrentLocation() {
     Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best,
             forceAndroidLocationManager: true)
         .then((Position position) {
       setState(() {
-        _currentPosition = position;
+        currentPosition = position;
       });
     }).catchError((e) {
       print(e);
     });
-  }*/
+  }
+
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
