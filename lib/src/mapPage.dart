@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -12,8 +13,8 @@ class MyMapPage extends StatefulWidget {
 
 class MyMapPageState extends State<MyMapPage> {
   Position currentPosition = Position(
-      longitude: 0,
-      latitude: 0,
+      longitude: 10.1764213,
+      latitude: 36.8917461,
       timestamp: DateTime.now(),
       accuracy: 0,
       altitude: 0,
@@ -77,6 +78,8 @@ class MyMapPageState extends State<MyMapPage> {
     determinePosition().then((value) {
       setState(() {
         currentPosition = value;
+        print(currentPosition.latitude);
+        print(currentPosition.longitude);
       });
     });
     //print(position);
@@ -109,6 +112,21 @@ class MyMapPageState extends State<MyMapPage> {
                     LatLng(currentPosition.latitude, currentPosition.longitude),
                 builder: (ctx) => Container(
                   child: Icon(Icons.location_on),
+                ),
+              ),
+              Marker(
+                width: 80.0,
+                height: 80.0,
+                point: LatLng(currentPosition.latitude + 0.002,
+                    currentPosition.longitude + 0.002),
+                builder: (ctx) => InkWell(
+                  onTap: (() {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  }),
+                  child: Container(
+                    child: Icon(Icons.account_balance),
+                  ),
                 ),
               ),
             ],
