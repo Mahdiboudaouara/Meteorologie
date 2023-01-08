@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -138,9 +139,29 @@ class MyMapPageState extends State<MyMapPage> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        content: Text(
-                            "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                      builder: (context) => SizedBox(
+                        child: AlertDialog(
+                          content: Container(
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Text(
+                                      "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                                ),
+                                ElevatedButton(
+                                    onPressed: () => {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPage())),
+                                        },
+                                    child: Text("press me"))
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     );
                   },
