@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:flutter_application_1/src/display.dart';
 
 class MyMapPage extends StatefulWidget {
   @override
@@ -138,9 +140,35 @@ class MyMapPageState extends State<MyMapPage> {
                   onTap: () {
                     showDialog(
                       context: context,
-                      builder: (context) => AlertDialog(
-                        content: Text(
-                            "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                      builder: (context) => SizedBox(
+                        child: AlertDialog(
+                          content: Container(
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20),
+                                  child: Text(
+                                      "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                                ),
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Color.fromARGB(
+                                                  255, 251, 180, 72)),
+                                    ),
+                                    onPressed: () => {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      WeatherForecast())),
+                                        },
+                                    child: Text(" Show more details"))
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     );
                   },
