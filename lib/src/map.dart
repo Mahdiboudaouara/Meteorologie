@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/loginPage.dart';
+import 'package:flutter_application_1/src/models/humidity_model.dart';
+import 'package:flutter_application_1/src/service/meteo_service.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -60,6 +62,7 @@ class MyMapPageState extends State<MyMapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xfff7892b),
         title: Text("My Map"),
       ),
       body: FlutterMap(
@@ -138,35 +141,34 @@ class MyMapPageState extends State<MyMapPage> {
                     child: Icon(Icons.sunny_snowing),
                   ),
                   onTap: () {
+                    var humidity = MeteoService().getHumidity();
+                    print(humidity);
                     showDialog(
                       context: context,
-                      builder: (context) => SizedBox(
-                        child: AlertDialog(
-                          content: Container(
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 20),
-                                  child: Text(
-                                      "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
-                                ),
-                                ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              Color.fromARGB(
-                                                  255, 251, 180, 72)),
-                                    ),
-                                    onPressed: () => {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WeatherForecast())),
-                                        },
-                                    child: Text(" Show more details"))
-                              ],
-                            ),
+                      builder: (context) => AlertDialog(
+                        content: Container(
+                          height: 200,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Text(
+                                    "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                              ),
+                              ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Color.fromARGB(255, 251, 180, 72)),
+                                  ),
+                                  onPressed: () => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Display())),
+                                      },
+                                  child: Text("Show more details"))
+                            ],
                           ),
                         ),
                       ),
