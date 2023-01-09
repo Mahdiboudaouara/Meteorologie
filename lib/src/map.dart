@@ -140,9 +140,62 @@ class MyMapPageState extends State<MyMapPage> {
                   child: Container(
                     child: Icon(Icons.sunny_snowing),
                   ),
-                  onTap: () {
-                    var humidity = MeteoService().getHumidity();
-                    print(humidity);
+                  onTap: () async {
+                    Map<String, num?>? humidity =
+                        await MeteoService().getHumidity();
+
+                    Map<String, num?>? luminosity =
+                        await MeteoService().getLuminosity();
+                    // var precipitations = await MeteoService().getPrecipitations();
+                    Map<String, num?>? pressure =
+                        await MeteoService().getPressure();
+                    Map<String, num?>? temperature =
+                        await MeteoService().getTemperature();
+
+                    List<String> humidity1 = humidity!.keys.toList();
+                    List<String> luminosity1 = luminosity!.keys.toList();
+                    List<String> pressure1 = pressure!.keys.toList();
+                    List<String> temperature1 = temperature!.keys.toList();
+                    //humidty
+                    ////
+                    humidity1.sort((a, b) {
+                      //sorting in ascending order
+                      return DateTime.parse(a).compareTo(DateTime.parse(b));
+                    });
+                    List<String> SortedHumidityList =
+                        List.from(humidity1.reversed);
+
+                    //luminosity
+                    ////
+                    luminosity1.sort((a, b) {
+                      //sorting in ascending order
+                      return DateTime.parse(a).compareTo(DateTime.parse(b));
+                    });
+                    List<String> SortedLuminosityList =
+                        List.from(luminosity1.reversed);
+
+                    //pressure
+                    ////
+                    pressure1.sort((a, b) {
+                      //sorting in ascending order
+                      return DateTime.parse(a).compareTo(DateTime.parse(b));
+                    });
+                    List<String> SortedPressureList =
+                        List.from(pressure1.reversed);
+
+                    //temperature
+                    ////
+                    temperature1.sort((a, b) {
+                      //sorting in ascending order
+                      return DateTime.parse(a).compareTo(DateTime.parse(b));
+                    });
+                    List<String> SortedTemperatureList =
+                        List.from(temperature1.reversed);
+
+                    //print
+                    print(SortedLuminosityList[0]);
+                    print(humidity[SortedHumidityList[0]]);
+
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -153,7 +206,7 @@ class MyMapPageState extends State<MyMapPage> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: Text(
-                                    "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
+                                    "Date: ${SortedLuminosityList[0]}\nLongitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}\nTemperature: ${temperature[SortedTemperatureList[0]]}\nHumidity: ${humidity[SortedHumidityList[0]]}\nLuminosity: ${luminosity[SortedLuminosityList[0]]}\nPressure: ${pressure[SortedPressureList[0]]}"),
                               ),
                               ElevatedButton(
                                   style: ButtonStyle(

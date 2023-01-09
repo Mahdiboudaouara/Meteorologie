@@ -4,12 +4,13 @@
 
 import 'dart:convert';
 
-Humidity? humidityFromJson(String str) => Humidity.fromJson(json.decode(str));
+Temperature? temperatureFromJson(String str) =>
+    Temperature.fromJson(json.decode(str));
 
-String humidityToJson(Humidity? data) => json.encode(data!.toJson());
+String temperatureToJson(Temperature? data) => json.encode(data!.toJson());
 
-class Humidity {
-  Humidity({
+class Temperature {
+  Temperature({
     this.success,
     this.data,
     this.message,
@@ -19,7 +20,7 @@ class Humidity {
   Map<String, num?>? data;
   String? message;
 
-  factory Humidity.fromJson(Map<String, dynamic> json) => Humidity(
+  factory Temperature.fromJson(Map<String, dynamic> json) => Temperature(
         success: json["success"],
         data:
             Map.from(json["data"]!).map((k, v) => MapEntry<String, num?>(k, v)),
