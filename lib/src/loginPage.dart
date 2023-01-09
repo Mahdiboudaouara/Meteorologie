@@ -272,28 +272,28 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 50),
                   _emailPasswordWidget(),
                   SizedBox(height: 20),
-                  _submitButton(
-                      // () async {
-                      //   LoginService()
-                      //       .login(emailController.text, passwordController.text)
-                      //       .then(
-                      //     (value) {
-                      //       if (value == true) {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => MyMapPage()));
-                      //       }
-                      //     },
-                      //   );
-                      // }
+                  _submitButton(() async {
+                    LoginService()
+                        .login(emailController.text, passwordController.text)
+                        .then(
+                      (value) {
+                        if (value == true) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyMapPage()));
+                        }
+                      },
+                    );
+                  }
 
-                      () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyMapPage()))
-                          }),
+                      // () => {
+                      //       Navigator.push(
+                      //           context,
+                      //           MaterialPageRoute(
+                      //               builder: (context) => MyMapPage()))
+                      //     }
+                      ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
