@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_application_1/src/models/humidity_model.dart';
 import 'package:flutter_application_1/src/models/luminosity_model.dart';
+import 'package:flutter_application_1/src/service/logout_service.dart';
 import 'package:flutter_application_1/src/service/meteo_service.dart';
+import 'package:flutter_application_1/src/welcomePage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
@@ -70,6 +72,31 @@ class MyMapPageState extends State<MyMapPage> {
       appBar: AppBar(
         backgroundColor: Color(0xfff7892b),
         title: Text("My Map"),
+        actions: [
+          Row(
+            children: [
+              Text("Logout"),
+              IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+                tooltip: 'Logout',
+                onPressed: () async {
+                  // LogoutService().logout().then((value) {
+                  //   if (value == true) {
+                  //     Navigator.push(context,
+                  //         MaterialPageRoute(builder: (context) => LoginPage()));
+                  //   }
+                  // });
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                },
+              )
+            ],
+          )
+        ],
+        automaticallyImplyLeading: false,
       ),
       body: FlutterMap(
         // Assign the map controller to the Flutter Map widget
