@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/loginPage.dart';
 import 'package:flutter_application_1/src/models/humidity_model.dart';
+import 'package:flutter_application_1/src/models/luminosity_model.dart';
 import 'package:flutter_application_1/src/service/meteo_service.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,6 +10,11 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_application_1/src/display.dart';
 
 class MyMapPage extends StatefulWidget {
+  static List finalLuminosity = [];
+  static List finalTemperature = [];
+  static List finalPressure = [];
+  static List finalHumidity = [];
+
   @override
   MyMapPageState createState() => MyMapPageState();
 }
@@ -114,26 +120,6 @@ class MyMapPageState extends State<MyMapPage> {
               Marker(
                 width: 80.0,
                 height: 80.0,
-                point: LatLng(currentPosition.latitude + 0.0001,
-                    currentPosition.longitude + 0.0001),
-                builder: (ctx) => InkWell(
-                  child: Container(
-                    child: Icon(Icons.sunny_snowing),
-                  ),
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        content: Text(
-                            "Longitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}"),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Marker(
-                width: 80.0,
-                height: 80.0,
                 point: LatLng(currentPosition.latitude - 0.0001,
                     currentPosition.longitude - 0.0001),
                 builder: (ctx) => InkWell(
@@ -193,6 +179,16 @@ class MyMapPageState extends State<MyMapPage> {
                         List.from(temperature1.reversed);
 
                     //print
+                    MyMapPage.finalLuminosity = [
+                      SortedLuminosityList,
+                      luminosity
+                    ];
+                    MyMapPage.finalHumidity = [SortedHumidityList, humidity];
+                    MyMapPage.finalPressure = [SortedPressureList, pressure];
+                    MyMapPage.finalTemperature = [
+                      SortedTemperatureList,
+                      temperature
+                    ];
                     print(SortedLuminosityList[0]);
                     print(humidity[SortedHumidityList[0]]);
 
