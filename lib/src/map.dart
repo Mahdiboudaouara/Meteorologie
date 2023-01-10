@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/loginPage.dart';
-import 'package:flutter_application_1/src/models/humidity_model.dart';
-import 'package:flutter_application_1/src/models/luminosity_model.dart';
-import 'package:flutter_application_1/src/service/logout_service.dart';
-import 'package:flutter_application_1/src/service/meteo_service.dart';
-import 'package:flutter_application_1/src/welcomePage.dart';
+import 'package:CertNodes/src/loginPage.dart';
+import 'package:CertNodes/src/models/humidity_model.dart';
+import 'package:CertNodes/src/models/luminosity_model.dart';
+import 'package:CertNodes/src/service/logout_service.dart';
+import 'package:CertNodes/src/service/meteo_service.dart';
+import 'package:CertNodes/src/welcomePage.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_application_1/src/display.dart';
+import 'package:CertNodes/src/display.dart';
 
 class MyMapPage extends StatefulWidget {
   static List finalLuminosity = [];
@@ -50,6 +50,37 @@ class MyMapPageState extends State<MyMapPage> {
   // using the Geolocator package and updates the 'currentPosition' field
   // with the new position.
   Future<void> updateCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
     final position = await Geolocator.getCurrentPosition();
     setState(() {
       currentPosition = position;
@@ -90,7 +121,7 @@ class MyMapPageState extends State<MyMapPage> {
                   //   }
                   // });
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                      MaterialPageRoute(builder: (context) => WelcomePage()));
                 },
               )
             ],
@@ -104,7 +135,7 @@ class MyMapPageState extends State<MyMapPage> {
         options: MapOptions(
           // Center the map on the current position
           center: LatLng(currentPosition.latitude, currentPosition.longitude),
-          zoom: 16.0,
+          zoom: 13.0,
           onTap: (tapPosition, point) => {
             tappedPosition = Position(
                 longitude: point.longitude,
@@ -147,8 +178,7 @@ class MyMapPageState extends State<MyMapPage> {
               Marker(
                 width: 80.0,
                 height: 80.0,
-                point: LatLng(currentPosition.latitude - 0.0001,
-                    currentPosition.longitude - 0.0001),
+                point: LatLng(36.89354826097406, 10.189031271078212),
                 builder: (ctx) => InkWell(
                   child: Container(
                     child: Icon(Icons.sunny_snowing),
@@ -223,13 +253,13 @@ class MyMapPageState extends State<MyMapPage> {
                       context: context,
                       builder: (context) => AlertDialog(
                         content: Container(
-                          height: 200,
+                          height: 230,
                           child: Column(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: Text(
-                                    "Date: ${SortedLuminosityList[0]}\nLongitude: ${tappedPosition.latitude}\nLatitude: ${tappedPosition.longitude}\nTemperature: ${temperature[SortedTemperatureList[0]]}\nHumidity: ${humidity[SortedHumidityList[0]]}\nLuminosity: ${luminosity[SortedLuminosityList[0]]}\nPressure: ${pressure[SortedPressureList[0]]}"),
+                                    "Date: ${SortedLuminosityList[0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${temperature[SortedTemperatureList[0]]}\nHumidity: ${humidity[SortedHumidityList[0]]}\nLuminosity: ${luminosity[SortedLuminosityList[0]]}\nPressure: ${pressure[SortedPressureList[0]]}"),
                               ),
                               ElevatedButton(
                                   style: ButtonStyle(

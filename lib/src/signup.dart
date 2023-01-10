@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/service/register_service.dart';
+import 'package:CertNodes/src/service/register_service.dart';
 import 'Widget/bezierContainer.dart';
 import 'loginPage.dart';
 import 'package:google_fonts/google_fonts.dart';

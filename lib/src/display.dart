@@ -228,7 +228,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.minutes),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: chartTemperature,
@@ -248,7 +248,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.minutes),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: chartHumidity,
@@ -268,7 +268,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.minutes),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: chartPressure,
@@ -281,14 +281,14 @@ class DisplayState extends State<Display> {
                 Title(color: Colors.black, child: Text("Luminosity")),
                 Container(
                     height: 500,
-                    width: 400,
+                    width: 800,
                     child: SfCartesianChart(
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.minutes),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: chartLuminosity,
