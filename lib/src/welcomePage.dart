@@ -12,15 +12,7 @@ class WelcomePage extends StatefulWidget {
   static List finalTemperature = [];
   static List finalPressure = [];
   static List finalHumidity = [];
-
-  final String? title;
-
-  @override
-  _WelcomePageState createState() => _WelcomePageState();
-}
-
-class _WelcomePageState extends State<WelcomePage> {
-  dataFetch() async {
+  static dataFetch() async {
     Map<String, num?>? humidity = await MeteoService().getHumidity();
 
     Map<String, num?>? luminosity = await MeteoService().getLuminosity();
@@ -65,17 +57,25 @@ class _WelcomePageState extends State<WelcomePage> {
     List<String> SortedTemperatureList = List.from(temperature1.reversed);
 
     //print
+    print("kamalt");
     WelcomePage.finalLuminosity = [SortedLuminosityList, luminosity];
     WelcomePage.finalHumidity = [SortedHumidityList, humidity];
     WelcomePage.finalPressure = [SortedPressureList, pressure];
     WelcomePage.finalTemperature = [SortedTemperatureList, temperature];
   }
 
+  final String? title;
+
+  @override
+  _WelcomePageState createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     // Initialize the map controller and update the current position
 
-    dataFetch();
+    WelcomePage.dataFetch();
 
     super.initState();
   }

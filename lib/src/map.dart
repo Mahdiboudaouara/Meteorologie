@@ -191,8 +191,20 @@ class MyMapPageState extends State<MyMapPage> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
-                                child: Text(
-                                    "Date: ${WelcomePage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${WelcomePage.finalTemperature[1][WelcomePage.finalLuminosity[0][20]]}\nHumidity: ${WelcomePage.finalHumidity[1][WelcomePage.finalHumidity[0][0]]}\nLuminosity: ${WelcomePage.finalLuminosity[1][WelcomePage.finalLuminosity[0][0]]}\nPressure: ${WelcomePage.finalPressure[1][WelcomePage.finalPressure[0][20]]}"),
+                                child: FutureBuilder(
+                                    future: WelcomePage.dataFetch(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<dynamic> snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState
+                                              .waiting) //While waiting for response return this
+                                      {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                      return Text(
+                                          "Date: ${WelcomePage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${WelcomePage.finalTemperature[1][WelcomePage.finalLuminosity[0][20]]}\nHumidity: ${WelcomePage.finalHumidity[1][WelcomePage.finalHumidity[0][0]]}\nLuminosity: ${WelcomePage.finalLuminosity[1][WelcomePage.finalLuminosity[0][0]]}\nPressure: ${WelcomePage.finalPressure[1][WelcomePage.finalPressure[0][20]]}");
+                                    }),
                               ),
                               ElevatedButton(
                                   style: ButtonStyle(
