@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:CertNodes/src/loginPage.dart';
 import 'package:CertNodes/src/models/humidity_model.dart';
@@ -89,11 +90,65 @@ class MyMapPageState extends State<MyMapPage> {
     });
   }
 
+  dataFetch() async {
+    print('dkhallt');
+    Map<String, num?>? humidity = await MeteoService().getHumidity();
+
+    Map<String, num?>? luminosity = await MeteoService().getLuminosity();
+    // var precipitations = await MeteoService().getPrecipitations();
+    Map<String, num?>? pressure = await MeteoService().getPressure();
+    Map<String, num?>? temperature = await MeteoService().getTemperature();
+
+    List<String> humidity1 = humidity!.keys.toList();
+    List<String> luminosity1 = luminosity!.keys.toList();
+    List<String> pressure1 = pressure!.keys.toList();
+    List<String> temperature1 = temperature!.keys.toList();
+    //humidty
+    ////
+    humidity1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedHumidityList = List.from(humidity1.reversed);
+
+    //luminosity
+    ////
+    luminosity1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedLuminosityList = List.from(luminosity1.reversed);
+
+    //pressure
+    ////
+    pressure1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedPressureList = List.from(pressure1.reversed);
+
+    //temperature
+    ////
+    temperature1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedTemperatureList = List.from(temperature1.reversed);
+
+    //print
+    MyMapPage.finalLuminosity = [SortedLuminosityList, luminosity];
+    MyMapPage.finalHumidity = [SortedHumidityList, humidity];
+    MyMapPage.finalPressure = [SortedPressureList, pressure];
+    MyMapPage.finalTemperature = [SortedTemperatureList, temperature];
+  }
+
   @override
   void initState() {
     // Initialize the map controller and update the current position
     mapController = MapController();
     updateCurrentPosition();
+    dataFetch();
+
     super.initState();
   }
 
@@ -184,71 +239,6 @@ class MyMapPageState extends State<MyMapPage> {
                     child: Icon(Icons.sunny_snowing),
                   ),
                   onTap: () async {
-                    Map<String, num?>? humidity =
-                        await MeteoService().getHumidity();
-
-                    Map<String, num?>? luminosity =
-                        await MeteoService().getLuminosity();
-                    // var precipitations = await MeteoService().getPrecipitations();
-                    Map<String, num?>? pressure =
-                        await MeteoService().getPressure();
-                    Map<String, num?>? temperature =
-                        await MeteoService().getTemperature();
-
-                    List<String> humidity1 = humidity!.keys.toList();
-                    List<String> luminosity1 = luminosity!.keys.toList();
-                    List<String> pressure1 = pressure!.keys.toList();
-                    List<String> temperature1 = temperature!.keys.toList();
-                    //humidty
-                    ////
-                    humidity1.sort((a, b) {
-                      //sorting in ascending order
-                      return DateTime.parse(a).compareTo(DateTime.parse(b));
-                    });
-                    List<String> SortedHumidityList =
-                        List.from(humidity1.reversed);
-
-                    //luminosity
-                    ////
-                    luminosity1.sort((a, b) {
-                      //sorting in ascending order
-                      return DateTime.parse(a).compareTo(DateTime.parse(b));
-                    });
-                    List<String> SortedLuminosityList =
-                        List.from(luminosity1.reversed);
-
-                    //pressure
-                    ////
-                    pressure1.sort((a, b) {
-                      //sorting in ascending order
-                      return DateTime.parse(a).compareTo(DateTime.parse(b));
-                    });
-                    List<String> SortedPressureList =
-                        List.from(pressure1.reversed);
-
-                    //temperature
-                    ////
-                    temperature1.sort((a, b) {
-                      //sorting in ascending order
-                      return DateTime.parse(a).compareTo(DateTime.parse(b));
-                    });
-                    List<String> SortedTemperatureList =
-                        List.from(temperature1.reversed);
-
-                    //print
-                    MyMapPage.finalLuminosity = [
-                      SortedLuminosityList,
-                      luminosity
-                    ];
-                    MyMapPage.finalHumidity = [SortedHumidityList, humidity];
-                    MyMapPage.finalPressure = [SortedPressureList, pressure];
-                    MyMapPage.finalTemperature = [
-                      SortedTemperatureList,
-                      temperature
-                    ];
-                    print(SortedLuminosityList[0]);
-                    print(humidity[SortedHumidityList[0]]);
-
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -259,7 +249,7 @@ class MyMapPageState extends State<MyMapPage> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: Text(
-                                    "Date: ${SortedLuminosityList[0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${temperature[SortedTemperatureList[0]]}\nHumidity: ${humidity[SortedHumidityList[0]]}\nLuminosity: ${luminosity[SortedLuminosityList[0]]}\nPressure: ${pressure[SortedPressureList[0]]}"),
+                                    "Date: ${MyMapPage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${"ddd"}nHumidity: ${"ee"}\nLuminosity: ${"dd"}\nPressure: ${"d"}"),
                               ),
                               ElevatedButton(
                                   style: ButtonStyle(
