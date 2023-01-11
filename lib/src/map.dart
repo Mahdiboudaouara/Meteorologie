@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:CertNodes/src/loginPage.dart';
 import 'package:CertNodes/src/models/humidity_model.dart';
@@ -134,17 +134,6 @@ class MyMapPageState extends State<MyMapPage> {
           // Center the map on the current position
           center: LatLng(currentPosition.latitude, currentPosition.longitude),
           zoom: 13.0,
-          onTap: (tapPosition, point) => {
-            tappedPosition = Position(
-                longitude: point.longitude,
-                latitude: point.latitude,
-                timestamp: DateTime.now(),
-                accuracy: 0,
-                altitude: 0,
-                heading: 0,
-                speed: 0,
-                speedAccuracy: 0),
-          },
         ),
         children: [
           TileLayer(
