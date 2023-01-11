@@ -3,6 +3,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'map.dart';
 
+class ChartSampleData {
+  ChartSampleData({this.x, this.yValue});
+
+  final DateTime? x;
+  final double? yValue;
+}
+
 void main() {
   return runApp(_ChartApp());
 }
@@ -20,193 +27,58 @@ class _ChartApp extends StatelessWidget {
 class Display extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
   Display({Key? key}) : super(key: key);
+  static List<ChartSampleData> chartTemperature = <ChartSampleData>[];
+  static List<ChartSampleData> chartHumidity = <ChartSampleData>[];
+  static List<ChartSampleData> chartPressure = <ChartSampleData>[];
+  static List<ChartSampleData> chartLuminosity = <ChartSampleData>[];
 
   @override
   DisplayState createState() => DisplayState();
 }
 
 class DisplayState extends State<Display> {
-  List<ChartSampleData> chartHumidity = <ChartSampleData>[
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][0]),
+  handleData() {
+    for (int i = 0; i < 150; i++) {
+      Display.chartTemperature.add(ChartSampleData(
+        x: DateTime.parse(MyMapPage.finalTemperature[0][i]),
+        yValue: double.parse(MyMapPage.finalTemperature[1]
+                [MyMapPage.finalTemperature[0][i]]
+            .toString()),
+      ));
+    }
+    for (int i = 0; i < 150; i++) {
+      Display.chartHumidity.add(ChartSampleData(
+        x: DateTime.parse(MyMapPage.finalHumidity[0][i]),
         yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][0]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][5]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][5]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][10]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][10]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][20]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][20]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][30]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][30]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][40]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][40]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][50]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][50]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][60]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][60]]
-            .toString())),
-  ];
+                [MyMapPage.finalHumidity[0][i]]
+            .toString()),
+      ));
+    }
 
-//
-//
-//
-  //
-  List<ChartSampleData> chartTemperature = <ChartSampleData>[
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][0]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][0]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][5]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][5]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][10]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][10]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][20]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][20]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][30]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][30]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][40]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][40]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][50]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][50]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][60]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][60]]
-            .toString())),
-  ];
-  //
-//
-//
-  //
-  List<ChartSampleData> chartPressure = <ChartSampleData>[
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][0]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][0]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][5]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][5]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][10]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][10]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][20]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][20]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][30]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][30]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][40]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][40]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][50]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][50]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][60]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][60]]
-            .toString())),
-  ];
-  //
-//
-//
-  //
-  List<ChartSampleData> chartLuminosity = <ChartSampleData>[
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][0]),
+    for (int i = 0; i < 150; i++) {
+      Display.chartLuminosity.add(ChartSampleData(
+        x: DateTime.parse(MyMapPage.finalLuminosity[0][i]),
         yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][0]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][5]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][5]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][10]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][10]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][20]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][20]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][30]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][30]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][40]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][40]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][50]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][50]]
-            .toString())),
-    ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][60]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][60]]
-            .toString())),
-  ];
+                [MyMapPage.finalLuminosity[0][i]]
+            .toString()),
+      ));
+    }
+    for (int i = 0; i < 150; i++) {
+      Display.chartPressure.add(ChartSampleData(
+        x: DateTime.parse(MyMapPage.finalPressure[0][i]),
+        yValue: double.parse(MyMapPage.finalPressure[1]
+                [MyMapPage.finalPressure[0][i]]
+            .toString()),
+      ));
+    }
+  }
+
+  @override
+  void initState() {
+    handleData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,7 +103,7 @@ class DisplayState extends State<Display> {
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
-                            dataSource: chartTemperature,
+                            dataSource: Display.chartTemperature,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
@@ -251,7 +123,7 @@ class DisplayState extends State<Display> {
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
-                            dataSource: chartHumidity,
+                            dataSource: Display.chartHumidity,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
@@ -271,7 +143,7 @@ class DisplayState extends State<Display> {
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
-                            dataSource: chartPressure,
+                            dataSource: Display.chartPressure,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
@@ -291,7 +163,7 @@ class DisplayState extends State<Display> {
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
-                            dataSource: chartLuminosity,
+                            dataSource: Display.chartLuminosity,
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
@@ -303,11 +175,4 @@ class DisplayState extends State<Display> {
           ),
         ));
   }
-}
-
-class ChartSampleData {
-  ChartSampleData({this.x, this.yValue});
-
-  final DateTime? x;
-  final double? yValue;
 }

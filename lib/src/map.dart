@@ -145,6 +145,7 @@ class MyMapPageState extends State<MyMapPage> {
   @override
   void initState() {
     // Initialize the map controller and update the current position
+
     mapController = MapController();
     updateCurrentPosition();
     dataFetch();
