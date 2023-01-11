@@ -9,11 +9,11 @@ import 'package:http/http.dart' as http;
 class MeteoService {
   Future<Map<String, num?>?> getHumidity() async {
     final response = await http.post(
-        Uri.parse("http://localhost:5050/api/influxdb/get/humidity"),
+        Uri.parse("http://10.0.2.2:8000/api/influxdb/get/humidity"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: json.encode({'start': '0', 'limit': '100'}));
+        body: json.encode({'start': '0', 'limit': '1000'}));
 
     if (response.statusCode == 200) {
       {
@@ -28,11 +28,11 @@ class MeteoService {
 
   Future<Map<String, num?>?> getLuminosity() async {
     final response = await http.post(
-        Uri.parse("http://localhost:5050/api/influxdb/get/luminosity"),
+        Uri.parse("http://10.0.2.2:8000/api/influxdb/get/luminosity"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: json.encode({'start': '0', 'limit': '100'}));
+        body: json.encode({'start': '0', 'limit': '1000'}));
 
     if (response.statusCode == 200) {
       {
@@ -66,11 +66,11 @@ class MeteoService {
 
   Future<Map<String, num?>?> getPressure() async {
     final response = await http.post(
-        Uri.parse("http://localhost:5050/api/influxdb/get/pressure"),
+        Uri.parse("http://10.0.2.2:8000/api/influxdb/get/pressure"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: json.encode({'start': '0', 'limit': '100'}));
+        body: json.encode({'start': '0', 'limit': '1000'}));
 
     if (response.statusCode == 200) {
       {
@@ -85,11 +85,11 @@ class MeteoService {
 
   Future<Map<String, num?>?> getTemperature() async {
     final response = await http.post(
-        Uri.parse("http://localhost:5050/api/influxdb/get/temperature"),
+        Uri.parse("http://10.0.2.2:8000/api/influxdb/get/temperature"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: json.encode({'start': '0', 'limit': '100'}));
+        body: json.encode({'start': '0', 'limit': '1000'}));
 
     if (response.statusCode == 200) {
       {

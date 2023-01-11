@@ -281,7 +281,7 @@ class DisplayState extends State<Display> {
                 Title(color: Colors.black, child: Text("Luminosity")),
                 Container(
                     height: 500,
-                    width: 800,
+                    width: 400,
                     child: SfCartesianChart(
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours

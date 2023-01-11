@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class RegisterService {
   Future<bool> register(String name, String email, String password) async {
     final response = await http.post(
-      Uri.parse("http://localhost:5050/api/registration"),
+      Uri.parse("http://10.0.2.2:8000/api/registration"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
