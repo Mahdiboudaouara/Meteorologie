@@ -2,7 +2,12 @@ import 'package:CertNodes/src/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import 'map.dart';
+late ZoomPanBehavior _zoomPanBehavior;
+
+late TooltipBehavior _tooltipBehaviorTemperature;
+late TooltipBehavior _tooltipBehaviorLuminosity;
+late TooltipBehavior _tooltipBehaviorPressure;
+late TooltipBehavior _tooltipBehaviorHumidity;
 
 class ChartSampleData {
   ChartSampleData({this.x, this.yValue});
@@ -80,7 +85,15 @@ class DisplayState extends State<Display> {
 
   @override
   void initState() {
+    _tooltipBehaviorTemperature = TooltipBehavior(enable: true);
+    _tooltipBehaviorLuminosity = TooltipBehavior(enable: true);
+    _tooltipBehaviorPressure = TooltipBehavior(enable: true);
+    _tooltipBehaviorHumidity = TooltipBehavior(enable: true);
+    _zoomPanBehavior = ZoomPanBehavior(
+        // Enables pinch zooming
+        enablePinching: true);
     handleData();
+
     super.initState();
   }
 
@@ -101,6 +114,9 @@ class DisplayState extends State<Display> {
                     width: 400,
                     child: SfCartesianChart(
                         backgroundColor: Colors.white,
+                        tooltipBehavior: _tooltipBehaviorTemperature,
+                        zoomPanBehavior: _zoomPanBehavior,
+
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
@@ -112,7 +128,7 @@ class DisplayState extends State<Display> {
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
-                            name: 'Sales',
+                            name: 'Temperature',
                           )
                         ])),
                 Title(color: Colors.black, child: Text("Humidity")),
@@ -120,6 +136,7 @@ class DisplayState extends State<Display> {
                     height: 500,
                     width: 400,
                     child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehaviorHumidity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -132,7 +149,7 @@ class DisplayState extends State<Display> {
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
-                            name: 'Sales',
+                            name: 'Humidity',
                           )
                         ])),
                 Title(color: Colors.black, child: Text("Pressure")),
@@ -140,6 +157,7 @@ class DisplayState extends State<Display> {
                     height: 500,
                     width: 400,
                     child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehaviorPressure,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -152,7 +170,7 @@ class DisplayState extends State<Display> {
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
-                            name: 'Sales',
+                            name: 'Pressure',
                           )
                         ])),
                 Title(color: Colors.black, child: Text("Luminosity")),
@@ -160,6 +178,7 @@ class DisplayState extends State<Display> {
                     height: 500,
                     width: 400,
                     child: SfCartesianChart(
+                        tooltipBehavior: _tooltipBehaviorLuminosity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -172,7 +191,7 @@ class DisplayState extends State<Display> {
                             xValueMapper: (ChartSampleData sales, _) => sales.x,
                             yValueMapper: (ChartSampleData sales, _) =>
                                 sales.yValue,
-                            name: 'Sales',
+                            name: 'Luminosity',
                           )
                         ])),
               ],
