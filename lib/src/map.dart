@@ -249,7 +249,7 @@ class MyMapPageState extends State<MyMapPage> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
                                 child: Text(
-                                    "Date: ${MyMapPage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${"ddd"}nHumidity: ${"ee"}\nLuminosity: ${"dd"}\nPressure: ${"d"}"),
+                                    "Date: ${MyMapPage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${MyMapPage.finalTemperature[1][MyMapPage.finalLuminosity[0][20]]}\nHumidity: ${MyMapPage.finalHumidity[1][MyMapPage.finalHumidity[0][0]]}\nLuminosity: ${MyMapPage.finalLuminosity[1][MyMapPage.finalLuminosity[0][0]]}\nPressure: ${MyMapPage.finalPressure[1][MyMapPage.finalPressure[0][20]]}"),
                               ),
                               ElevatedButton(
                                   style: ButtonStyle(
