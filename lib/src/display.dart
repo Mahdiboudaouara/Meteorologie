@@ -39,6 +39,10 @@ class Display extends StatefulWidget {
 
 class DisplayState extends State<Display> {
   handleData() {
+    Display.chartTemperature = <ChartSampleData>[];
+    Display.chartHumidity = <ChartSampleData>[];
+    Display.chartPressure = <ChartSampleData>[];
+    Display.chartLuminosity = <ChartSampleData>[];
     for (int i = 0; i < 150; i++) {
       Display.chartTemperature.add(ChartSampleData(
         x: DateTime.parse(WelcomePage.finalTemperature[0][i]),
@@ -101,7 +105,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.days),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartTemperature,
@@ -121,7 +125,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.days),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartHumidity,
@@ -141,7 +145,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.days),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartPressure,
@@ -161,7 +165,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.days),
+                            intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartLuminosity,
