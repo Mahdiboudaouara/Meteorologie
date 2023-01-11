@@ -2,8 +2,10 @@ import 'package:CertNodes/src/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-late ZoomPanBehavior _zoomPanBehavior;
-
+late ZoomPanBehavior _zoomPanBehaviorTemperature;
+late ZoomPanBehavior _zoomPanBehaviorLuminosity;
+late ZoomPanBehavior _zoomPanBehaviorPressure;
+late ZoomPanBehavior _zoomPanBehaviorHumidity;
 late TooltipBehavior _tooltipBehaviorTemperature;
 late TooltipBehavior _tooltipBehaviorLuminosity;
 late TooltipBehavior _tooltipBehaviorPressure;
@@ -11,6 +13,151 @@ late TooltipBehavior _tooltipBehaviorHumidity;
 
 class ChartSampleData {
   ChartSampleData({this.x, this.yValue});
+  static List<String> list = <String>[
+    'ColumnSeries',
+    'LineSeries',
+    'SplineSeries'
+  ];
+  static List<dynamic> temperatureListWidget = [
+    ColumnSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartTemperature,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Temperature',
+    ),
+    LineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartTemperature,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Temperature',
+    ),
+    SplineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartTemperature,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Temperature',
+    )
+  ];
+  static List<dynamic> humidityListWidget = [
+    ColumnSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartHumidity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Humidity',
+    ),
+    LineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartHumidity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Humidity',
+    ),
+    SplineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartHumidity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Humidity',
+    )
+  ];
+  static List<dynamic> pressureListWidget = [
+    ColumnSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartPressure,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Pressure',
+    ),
+    LineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartPressure,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Pressure',
+    ),
+    SplineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartPressure,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Pressure',
+    )
+  ];
+  static List<dynamic> luminosityListWidget = [
+    ColumnSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartLuminosity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Luminosity',
+    ),
+    LineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartLuminosity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Luminosity',
+    ),
+    SplineSeries<ChartSampleData, DateTime>(
+      // markerSettings: MarkerSettings(
+      //   isVisible: true,
+      //   width: 3,
+      //   height: 3,
+      // ),
+      dataSource: Display.chartLuminosity,
+      xValueMapper: (ChartSampleData sales, _) => sales.x,
+      yValueMapper: (ChartSampleData sales, _) => sales.yValue,
+      name: 'Luminosity',
+    )
+  ];
 
   final DateTime? x;
   final double? yValue;
@@ -43,6 +190,7 @@ class Display extends StatefulWidget {
 }
 
 class DisplayState extends State<Display> {
+  String dropdownValue = ChartSampleData.list.first;
   handleData() {
     Display.chartTemperature = <ChartSampleData>[];
     Display.chartHumidity = <ChartSampleData>[];
@@ -89,7 +237,16 @@ class DisplayState extends State<Display> {
     _tooltipBehaviorLuminosity = TooltipBehavior(enable: true);
     _tooltipBehaviorPressure = TooltipBehavior(enable: true);
     _tooltipBehaviorHumidity = TooltipBehavior(enable: true);
-    _zoomPanBehavior = ZoomPanBehavior(
+    _zoomPanBehaviorTemperature = ZoomPanBehavior(
+        // Enables pinch zooming
+        enablePinching: true);
+    _zoomPanBehaviorLuminosity = ZoomPanBehavior(
+        // Enables pinch zooming
+        enablePinching: true);
+    _zoomPanBehaviorPressure = ZoomPanBehavior(
+        // Enables pinch zooming
+        enablePinching: true);
+    _zoomPanBehaviorHumidity = ZoomPanBehavior(
         // Enables pinch zooming
         enablePinching: true);
     handleData();
@@ -108,6 +265,29 @@ class DisplayState extends State<Display> {
             //Initialize the chart widget
             child: Column(
               children: [
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      dropdownValue = value!;
+                    });
+                  },
+                  items: ChartSampleData.list
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
                 Title(color: Colors.black, child: Text("Temperature")),
                 Container(
                     height: 500,
@@ -115,7 +295,7 @@ class DisplayState extends State<Display> {
                     child: SfCartesianChart(
                         backgroundColor: Colors.white,
                         tooltipBehavior: _tooltipBehaviorTemperature,
-                        zoomPanBehavior: _zoomPanBehavior,
+                        zoomPanBehavior: _zoomPanBehaviorTemperature,
 
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -123,13 +303,8 @@ class DisplayState extends State<Display> {
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
-                          LineSeries<ChartSampleData, DateTime>(
-                            dataSource: Display.chartTemperature,
-                            xValueMapper: (ChartSampleData sales, _) => sales.x,
-                            yValueMapper: (ChartSampleData sales, _) =>
-                                sales.yValue,
-                            name: 'Temperature',
-                          )
+                          ChartSampleData.temperatureListWidget[
+                              ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
                 Title(color: Colors.black, child: Text("Humidity")),
                 Container(
@@ -137,6 +312,7 @@ class DisplayState extends State<Display> {
                     width: 400,
                     child: SfCartesianChart(
                         tooltipBehavior: _tooltipBehaviorHumidity,
+                        zoomPanBehavior: _zoomPanBehaviorHumidity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -144,13 +320,8 @@ class DisplayState extends State<Display> {
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
-                          LineSeries<ChartSampleData, DateTime>(
-                            dataSource: Display.chartHumidity,
-                            xValueMapper: (ChartSampleData sales, _) => sales.x,
-                            yValueMapper: (ChartSampleData sales, _) =>
-                                sales.yValue,
-                            name: 'Humidity',
-                          )
+                          ChartSampleData.humidityListWidget[
+                              ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
                 Title(color: Colors.black, child: Text("Pressure")),
                 Container(
@@ -158,6 +329,7 @@ class DisplayState extends State<Display> {
                     width: 400,
                     child: SfCartesianChart(
                         tooltipBehavior: _tooltipBehaviorPressure,
+                        zoomPanBehavior: _zoomPanBehaviorPressure,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -165,13 +337,8 @@ class DisplayState extends State<Display> {
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
-                          LineSeries<ChartSampleData, DateTime>(
-                            dataSource: Display.chartPressure,
-                            xValueMapper: (ChartSampleData sales, _) => sales.x,
-                            yValueMapper: (ChartSampleData sales, _) =>
-                                sales.yValue,
-                            name: 'Pressure',
-                          )
+                          ChartSampleData.pressureListWidget[
+                              ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
                 Title(color: Colors.black, child: Text("Luminosity")),
                 Container(
@@ -179,6 +346,7 @@ class DisplayState extends State<Display> {
                     width: 400,
                     child: SfCartesianChart(
                         tooltipBehavior: _tooltipBehaviorLuminosity,
+                        zoomPanBehavior: _zoomPanBehaviorLuminosity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
                         primaryXAxis: DateTimeAxis(
@@ -186,13 +354,8 @@ class DisplayState extends State<Display> {
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
                             intervalType: DateTimeIntervalType.hours),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
-                          LineSeries<ChartSampleData, DateTime>(
-                            dataSource: Display.chartLuminosity,
-                            xValueMapper: (ChartSampleData sales, _) => sales.x,
-                            yValueMapper: (ChartSampleData sales, _) =>
-                                sales.yValue,
-                            name: 'Luminosity',
-                          )
+                          ChartSampleData.luminosityListWidget[
+                              ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
               ],
             ),
