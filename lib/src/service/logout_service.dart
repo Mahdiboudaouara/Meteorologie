@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 class LogoutService {
   Future<bool> logout() async {
     final response = await http.get(
-      Uri.parse("http://localhost:3000/api/signout"),
+      Uri.parse("http://10.0.2.2:8000/api/signout"),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

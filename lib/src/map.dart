@@ -175,7 +175,7 @@ class MyMapPageState extends State<MyMapPage> {
                       context: context,
                       builder: (context) => AlertDialog(
                         content: Container(
-                          height: 230,
+                          height: 190,
                           child: Column(
                             children: [
                               Padding(
@@ -191,23 +191,30 @@ class MyMapPageState extends State<MyMapPage> {
                                         return const Center(
                                             child: CircularProgressIndicator());
                                       }
-                                      return Text(
-                                          "Date: ${WelcomePage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${WelcomePage.finalTemperature[1][WelcomePage.finalLuminosity[0][20]]}\nHumidity: ${WelcomePage.finalHumidity[1][WelcomePage.finalHumidity[0][0]]}\nLuminosity: ${WelcomePage.finalLuminosity[1][WelcomePage.finalLuminosity[0][0]]}\nPressure: ${WelcomePage.finalPressure[1][WelcomePage.finalPressure[0][20]]}");
+                                      return Column(
+                                        children: [
+                                          Text(
+                                              "Date: ${WelcomePage.finalLuminosity[0][0]}\nLongitude: ${36.89354826097406}\nLatitude: ${10.189031271078212}\nTemperature: ${WelcomePage.finalTemperature[1][WelcomePage.finalLuminosity[0][20]]}\nHumidity: ${WelcomePage.finalHumidity[1][WelcomePage.finalHumidity[0][0]]}\nLuminosity: ${WelcomePage.finalLuminosity[1][WelcomePage.finalLuminosity[0][0]]}\nPressure: ${WelcomePage.finalPressure[1][WelcomePage.finalPressure[0][20]]}"),
+                                          ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Color.fromARGB(
+                                                            255, 251, 180, 72)),
+                                              ),
+                                              onPressed: () => {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    Display())),
+                                                  },
+                                              child: Text("Show more details"))
+                                        ],
+                                      );
                                     }),
                               ),
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Color.fromARGB(255, 251, 180, 72)),
-                                  ),
-                                  onPressed: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Display())),
-                                      },
-                                  child: Text("Show more details"))
                             ],
                           ),
                         ),
