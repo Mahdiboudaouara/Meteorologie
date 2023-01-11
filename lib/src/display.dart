@@ -1,3 +1,4 @@
+import 'package:CertNodes/src/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -40,34 +41,34 @@ class DisplayState extends State<Display> {
   handleData() {
     for (int i = 0; i < 150; i++) {
       Display.chartTemperature.add(ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalTemperature[0][i]),
-        yValue: double.parse(MyMapPage.finalTemperature[1]
-                [MyMapPage.finalTemperature[0][i]]
+        x: DateTime.parse(WelcomePage.finalTemperature[0][i]),
+        yValue: double.parse(WelcomePage.finalTemperature[1]
+                [WelcomePage.finalTemperature[0][i]]
             .toString()),
       ));
     }
     for (int i = 0; i < 150; i++) {
       Display.chartHumidity.add(ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalHumidity[0][i]),
-        yValue: double.parse(MyMapPage.finalHumidity[1]
-                [MyMapPage.finalHumidity[0][i]]
+        x: DateTime.parse(WelcomePage.finalHumidity[0][i]),
+        yValue: double.parse(WelcomePage.finalHumidity[1]
+                [WelcomePage.finalHumidity[0][i]]
             .toString()),
       ));
     }
 
     for (int i = 0; i < 150; i++) {
       Display.chartLuminosity.add(ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalLuminosity[0][i]),
-        yValue: double.parse(MyMapPage.finalLuminosity[1]
-                [MyMapPage.finalLuminosity[0][i]]
+        x: DateTime.parse(WelcomePage.finalLuminosity[0][i]),
+        yValue: double.parse(WelcomePage.finalLuminosity[1]
+                [WelcomePage.finalLuminosity[0][i]]
             .toString()),
       ));
     }
     for (int i = 0; i < 150; i++) {
       Display.chartPressure.add(ChartSampleData(
-        x: DateTime.parse(MyMapPage.finalPressure[0][i]),
-        yValue: double.parse(MyMapPage.finalPressure[1]
-                [MyMapPage.finalPressure[0][i]]
+        x: DateTime.parse(WelcomePage.finalPressure[0][i]),
+        yValue: double.parse(WelcomePage.finalPressure[1]
+                [WelcomePage.finalPressure[0][i]]
             .toString()),
       ));
     }
@@ -100,7 +101,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
+                            intervalType: DateTimeIntervalType.days),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartTemperature,
@@ -120,7 +121,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
+                            intervalType: DateTimeIntervalType.days),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartHumidity,
@@ -140,7 +141,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
+                            intervalType: DateTimeIntervalType.days),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartPressure,
@@ -160,7 +161,7 @@ class DisplayState extends State<Display> {
                         primaryXAxis: DateTimeAxis(
                             majorGridLines: MajorGridLines(width: 0),
                             edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
+                            intervalType: DateTimeIntervalType.days),
                         series: <ChartSeries<ChartSampleData, DateTime>>[
                           LineSeries<ChartSampleData, DateTime>(
                             dataSource: Display.chartLuminosity,

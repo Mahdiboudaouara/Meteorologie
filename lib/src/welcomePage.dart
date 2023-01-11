@@ -1,3 +1,4 @@
+import 'package:CertNodes/src/service/meteo_service.dart';
 import 'package:flutter/material.dart';
 import 'package:CertNodes/src/signup.dart';
 
@@ -7,6 +8,10 @@ import 'loginPage.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key? key, this.title}) : super(key: key);
+  static List finalLuminosity = [];
+  static List finalTemperature = [];
+  static List finalPressure = [];
+  static List finalHumidity = [];
 
   final String? title;
 
@@ -15,6 +20,66 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  dataFetch() async {
+    Map<String, num?>? humidity = await MeteoService().getHumidity();
+
+    Map<String, num?>? luminosity = await MeteoService().getLuminosity();
+    // var precipitations = await MeteoService().getPrecipitations();
+    Map<String, num?>? pressure = await MeteoService().getPressure();
+    Map<String, num?>? temperature = await MeteoService().getTemperature();
+
+    List<String> humidity1 = humidity!.keys.toList();
+    List<String> luminosity1 = luminosity!.keys.toList();
+    List<String> pressure1 = pressure!.keys.toList();
+    List<String> temperature1 = temperature!.keys.toList();
+    //humidty
+    ////
+    humidity1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedHumidityList = List.from(humidity1.reversed);
+
+    //luminosity
+    ////
+    luminosity1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedLuminosityList = List.from(luminosity1.reversed);
+
+    //pressure
+    ////
+    pressure1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedPressureList = List.from(pressure1.reversed);
+
+    //temperature
+    ////
+    temperature1.sort((a, b) {
+      //sorting in ascending order
+      return DateTime.parse(a).compareTo(DateTime.parse(b));
+    });
+    List<String> SortedTemperatureList = List.from(temperature1.reversed);
+
+    //print
+    WelcomePage.finalLuminosity = [SortedLuminosityList, luminosity];
+    WelcomePage.finalHumidity = [SortedHumidityList, humidity];
+    WelcomePage.finalPressure = [SortedPressureList, pressure];
+    WelcomePage.finalTemperature = [SortedTemperatureList, temperature];
+  }
+
+  @override
+  void initState() {
+    // Initialize the map controller and update the current position
+
+    dataFetch();
+
+    super.initState();
+  }
+
   Widget _submitButton() {
     return InkWell(
       onTap: () {
