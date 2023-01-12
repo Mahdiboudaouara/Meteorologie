@@ -2,10 +2,22 @@ import 'package:CertNodes/src/welcomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-late ZoomPanBehavior _zoomPanBehaviorTemperature;
-late ZoomPanBehavior _zoomPanBehaviorLuminosity;
-late ZoomPanBehavior _zoomPanBehaviorPressure;
-late ZoomPanBehavior _zoomPanBehaviorHumidity;
+late ZoomPanBehavior _zoomPanBehaviorTemperature = ZoomPanBehavior(
+  // Enables pinch zooming
+  enablePinching: false, enablePanning: false,
+);
+late ZoomPanBehavior _zoomPanBehaviorLuminosity = ZoomPanBehavior(
+    // Enables pinch zooming
+    enablePinching: false,
+    enablePanning: false);
+late ZoomPanBehavior _zoomPanBehaviorPressure = ZoomPanBehavior(
+    // Enables pinch zooming
+    enablePinching: false,
+    enablePanning: false);
+late ZoomPanBehavior _zoomPanBehaviorHumidity = ZoomPanBehavior(
+    // Enables pinch zooming
+    enablePinching: false,
+    enablePanning: false);
 late TooltipBehavior _tooltipBehaviorTemperature;
 late TooltipBehavior _tooltipBehaviorLuminosity;
 late TooltipBehavior _tooltipBehaviorPressure;
@@ -191,6 +203,8 @@ class Display extends StatefulWidget {
 
 class DisplayState extends State<Display> {
   String dropdownValue = ChartSampleData.list.first;
+
+  var zoomToggle = false;
   handleData() {
     Display.chartTemperature = <ChartSampleData>[];
     Display.chartHumidity = <ChartSampleData>[];
@@ -211,7 +225,6 @@ class DisplayState extends State<Display> {
     for (int i = 0; i < 150; i++) {
       Display.chartHumidity.add(ChartSampleData(
         x: DateTime.parse(WelcomePage.finalHumidity[0][i])
-            .millisecondsSinceEpoch
             .toString()
             .substring(5, 19)
             .splitMapJoin("-", onMatch: ((p0) => "/"))
@@ -225,7 +238,6 @@ class DisplayState extends State<Display> {
     for (int i = 0; i < 150; i++) {
       Display.chartLuminosity.add(ChartSampleData(
         x: DateTime.parse(WelcomePage.finalLuminosity[0][i])
-            .millisecondsSinceEpoch
             .toString()
             .substring(5, 19)
             .splitMapJoin("-", onMatch: ((p0) => "/"))
@@ -238,7 +250,6 @@ class DisplayState extends State<Display> {
     for (int i = 0; i < 150; i++) {
       Display.chartPressure.add(ChartSampleData(
         x: DateTime.parse(WelcomePage.finalPressure[0][i])
-            .millisecondsSinceEpoch
             .toString()
             .substring(5, 19)
             .splitMapJoin("-", onMatch: ((p0) => "/"))
@@ -256,18 +267,6 @@ class DisplayState extends State<Display> {
     _tooltipBehaviorLuminosity = TooltipBehavior(enable: true);
     _tooltipBehaviorPressure = TooltipBehavior(enable: true);
     _tooltipBehaviorHumidity = TooltipBehavior(enable: true);
-    _zoomPanBehaviorTemperature = ZoomPanBehavior(
-        // Enables pinch zooming
-        enablePinching: true);
-    _zoomPanBehaviorLuminosity = ZoomPanBehavior(
-        // Enables pinch zooming
-        enablePinching: true);
-    _zoomPanBehaviorPressure = ZoomPanBehavior(
-        // Enables pinch zooming
-        enablePinching: true);
-    _zoomPanBehaviorHumidity = ZoomPanBehavior(
-        // Enables pinch zooming
-        enablePinching: true);
     handleData();
 
     super.initState();
@@ -277,7 +276,52 @@ class DisplayState extends State<Display> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text('Charts'), backgroundColor: Color(0xfff7892b)),
+          backgroundColor: Color(0xfff7892b),
+          title: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(right: 100),
+                child: Text(
+                  'Charts',
+                  style: TextStyle(
+                      fontSize: 22.0,
+                      color: Color.fromARGB(255, 255, 255, 255)),
+                ),
+              ),
+              Text("Zoom Toggle", style: TextStyle(fontSize: 14)),
+              Switch(
+                // thumb color (round icon)
+                activeColor: Color.fromARGB(255, 74, 70, 70),
+                activeTrackColor: Color.fromARGB(255, 255, 255, 255),
+                inactiveThumbColor: Color.fromARGB(255, 74, 70, 70),
+                inactiveTrackColor: Color.fromARGB(255, 255, 255, 255),
+                splashRadius: 50.0,
+                // boolean variable value
+                value: zoomToggle,
+                // changes the state of the switch
+                onChanged: (value) => setState(() {
+                  zoomToggle = value;
+                  _zoomPanBehaviorTemperature = ZoomPanBehavior(
+                      // Enables pinch zooming
+                      enablePinching: zoomToggle,
+                      enablePanning: zoomToggle);
+                  _zoomPanBehaviorLuminosity = ZoomPanBehavior(
+                      // Enables pinch zooming
+                      enablePinching: zoomToggle,
+                      enablePanning: zoomToggle);
+                  _zoomPanBehaviorPressure = ZoomPanBehavior(
+                      // Enables pinch zooming
+                      enablePinching: zoomToggle,
+                      enablePanning: zoomToggle);
+                  _zoomPanBehaviorHumidity = ZoomPanBehavior(
+                      // Enables pinch zooming
+                      enablePinching: zoomToggle,
+                      enablePanning: zoomToggle);
+                }),
+              ),
+            ],
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
           child: SingleChildScrollView(
@@ -287,11 +331,11 @@ class DisplayState extends State<Display> {
                 DropdownButton<String>(
                   value: dropdownValue,
                   icon: const Icon(Icons.arrow_downward),
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
+                  elevation: 12,
+                  style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                   underline: Container(
                     height: 2,
-                    color: Colors.deepPurpleAccent,
+                    color: Color.fromARGB(255, 0, 0, 0),
                   ),
                   onChanged: (String? value) {
                     // This is called when the user selects an item.
@@ -307,7 +351,6 @@ class DisplayState extends State<Display> {
                     );
                   }).toList(),
                 ),
-                Title(color: Colors.black, child: Text("Temperature")),
                 Container(
                     height: 500,
                     width: 400,
@@ -323,10 +366,7 @@ class DisplayState extends State<Display> {
                         series: <ChartSeries<ChartSampleData, String>>[
                           ChartSampleData.temperatureListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)],
-                          ChartSampleData.temperatureListWidget[
-                              ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
-                Title(color: Colors.black, child: Text("Humidity")),
                 Container(
                     height: 500,
                     width: 400,
@@ -341,7 +381,6 @@ class DisplayState extends State<Display> {
                           ChartSampleData.humidityListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
-                Title(color: Colors.black, child: Text("Pressure")),
                 Container(
                     height: 500,
                     width: 400,
@@ -356,7 +395,6 @@ class DisplayState extends State<Display> {
                           ChartSampleData.pressureListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
-                Title(color: Colors.black, child: Text("Luminosity")),
                 Container(
                     height: 500,
                     width: 400,
