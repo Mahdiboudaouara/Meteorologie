@@ -14,12 +14,12 @@ late TooltipBehavior _tooltipBehaviorHumidity;
 class ChartSampleData {
   ChartSampleData({this.x, this.yValue});
   static List<String> list = <String>[
-    'ColumnSeries',
     'LineSeries',
+    'ColumnSeries',
     'SplineSeries'
   ];
   static List<dynamic> temperatureListWidget = [
-    ColumnSeries<ChartSampleData, DateTime>(
+    LineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -30,7 +30,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Temperature',
     ),
-    LineSeries<ChartSampleData, DateTime>(
+    ColumnSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -41,7 +41,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Temperature',
     ),
-    SplineSeries<ChartSampleData, DateTime>(
+    SplineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -54,7 +54,7 @@ class ChartSampleData {
     )
   ];
   static List<dynamic> humidityListWidget = [
-    ColumnSeries<ChartSampleData, DateTime>(
+    LineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -65,7 +65,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Humidity',
     ),
-    LineSeries<ChartSampleData, DateTime>(
+    ColumnSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -76,7 +76,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Humidity',
     ),
-    SplineSeries<ChartSampleData, DateTime>(
+    SplineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -89,7 +89,7 @@ class ChartSampleData {
     )
   ];
   static List<dynamic> pressureListWidget = [
-    ColumnSeries<ChartSampleData, DateTime>(
+    LineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -100,7 +100,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Pressure',
     ),
-    LineSeries<ChartSampleData, DateTime>(
+    ColumnSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -111,7 +111,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Pressure',
     ),
-    SplineSeries<ChartSampleData, DateTime>(
+    SplineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -124,7 +124,7 @@ class ChartSampleData {
     )
   ];
   static List<dynamic> luminosityListWidget = [
-    ColumnSeries<ChartSampleData, DateTime>(
+    LineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -135,7 +135,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Luminosity',
     ),
-    LineSeries<ChartSampleData, DateTime>(
+    ColumnSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -146,7 +146,7 @@ class ChartSampleData {
       yValueMapper: (ChartSampleData sales, _) => sales.yValue,
       name: 'Luminosity',
     ),
-    SplineSeries<ChartSampleData, DateTime>(
+    SplineSeries<ChartSampleData, String>(
       // markerSettings: MarkerSettings(
       //   isVisible: true,
       //   width: 3,
@@ -159,7 +159,7 @@ class ChartSampleData {
     )
   ];
 
-  final DateTime? x;
+  final String? x;
   final double? yValue;
 }
 
@@ -198,7 +198,11 @@ class DisplayState extends State<Display> {
     Display.chartLuminosity = <ChartSampleData>[];
     for (int i = 0; i < 150; i++) {
       Display.chartTemperature.add(ChartSampleData(
-        x: DateTime.parse(WelcomePage.finalTemperature[0][i]),
+        x: DateTime.parse(WelcomePage.finalTemperature[0][i])
+            .toString()
+            .substring(5, 19)
+            .splitMapJoin("-", onMatch: ((p0) => "/"))
+            .splitMapJoin(" ", onMatch: ((p0) => "\n")),
         yValue: double.parse(WelcomePage.finalTemperature[1]
                 [WelcomePage.finalTemperature[0][i]]
             .toString()),
@@ -206,7 +210,12 @@ class DisplayState extends State<Display> {
     }
     for (int i = 0; i < 150; i++) {
       Display.chartHumidity.add(ChartSampleData(
-        x: DateTime.parse(WelcomePage.finalHumidity[0][i]),
+        x: DateTime.parse(WelcomePage.finalHumidity[0][i])
+            .millisecondsSinceEpoch
+            .toString()
+            .substring(5, 19)
+            .splitMapJoin("-", onMatch: ((p0) => "/"))
+            .splitMapJoin(" ", onMatch: ((p0) => "\n")),
         yValue: double.parse(WelcomePage.finalHumidity[1]
                 [WelcomePage.finalHumidity[0][i]]
             .toString()),
@@ -215,7 +224,12 @@ class DisplayState extends State<Display> {
 
     for (int i = 0; i < 150; i++) {
       Display.chartLuminosity.add(ChartSampleData(
-        x: DateTime.parse(WelcomePage.finalLuminosity[0][i]),
+        x: DateTime.parse(WelcomePage.finalLuminosity[0][i])
+            .millisecondsSinceEpoch
+            .toString()
+            .substring(5, 19)
+            .splitMapJoin("-", onMatch: ((p0) => "/"))
+            .splitMapJoin(" ", onMatch: ((p0) => "\n")),
         yValue: double.parse(WelcomePage.finalLuminosity[1]
                 [WelcomePage.finalLuminosity[0][i]]
             .toString()),
@@ -223,7 +237,12 @@ class DisplayState extends State<Display> {
     }
     for (int i = 0; i < 150; i++) {
       Display.chartPressure.add(ChartSampleData(
-        x: DateTime.parse(WelcomePage.finalPressure[0][i]),
+        x: DateTime.parse(WelcomePage.finalPressure[0][i])
+            .millisecondsSinceEpoch
+            .toString()
+            .substring(5, 19)
+            .splitMapJoin("-", onMatch: ((p0) => "/"))
+            .splitMapJoin(" ", onMatch: ((p0) => "\n")),
         yValue: double.parse(WelcomePage.finalPressure[1]
                 [WelcomePage.finalPressure[0][i]]
             .toString()),
@@ -298,11 +317,12 @@ class DisplayState extends State<Display> {
                         zoomPanBehavior: _zoomPanBehaviorTemperature,
 
                         //Specifying date time interval type as hours
-                        primaryXAxis: DateTimeAxis(
-                            majorGridLines: MajorGridLines(width: 0),
-                            edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
-                        series: <ChartSeries<ChartSampleData, DateTime>>[
+                        primaryXAxis: CategoryAxis(
+                            title: AxisTitle(text: 'Temperature'),
+                            isInversed: true),
+                        series: <ChartSeries<ChartSampleData, String>>[
+                          ChartSampleData.temperatureListWidget[
+                              ChartSampleData.list.indexOf(dropdownValue)],
                           ChartSampleData.temperatureListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
@@ -315,11 +335,9 @@ class DisplayState extends State<Display> {
                         zoomPanBehavior: _zoomPanBehaviorHumidity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
-                        primaryXAxis: DateTimeAxis(
-                            majorGridLines: MajorGridLines(width: 0),
-                            edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
-                        series: <ChartSeries<ChartSampleData, DateTime>>[
+                        primaryXAxis:
+                            CategoryAxis(title: AxisTitle(text: 'Humidity')),
+                        series: <ChartSeries<ChartSampleData, String>>[
                           ChartSampleData.humidityListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
@@ -332,11 +350,9 @@ class DisplayState extends State<Display> {
                         zoomPanBehavior: _zoomPanBehaviorPressure,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
-                        primaryXAxis: DateTimeAxis(
-                            majorGridLines: MajorGridLines(width: 0),
-                            edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
-                        series: <ChartSeries<ChartSampleData, DateTime>>[
+                        primaryXAxis:
+                            CategoryAxis(title: AxisTitle(text: 'Pressure')),
+                        series: <ChartSeries<ChartSampleData, String>>[
                           ChartSampleData.pressureListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
@@ -349,11 +365,9 @@ class DisplayState extends State<Display> {
                         zoomPanBehavior: _zoomPanBehaviorLuminosity,
                         backgroundColor: Colors.white,
                         //Specifying date time interval type as hours
-                        primaryXAxis: DateTimeAxis(
-                            majorGridLines: MajorGridLines(width: 0),
-                            edgeLabelPlacement: EdgeLabelPlacement.shift,
-                            intervalType: DateTimeIntervalType.hours),
-                        series: <ChartSeries<ChartSampleData, DateTime>>[
+                        primaryXAxis:
+                            CategoryAxis(title: AxisTitle(text: 'Luminosity')),
+                        series: <ChartSeries<ChartSampleData, String>>[
                           ChartSampleData.luminosityListWidget[
                               ChartSampleData.list.indexOf(dropdownValue)]
                         ])),
