@@ -11,6 +11,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:CertNodes/src/display.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MyMapPage extends StatefulWidget {
   @override

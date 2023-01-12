@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:CertNodes/src/service/login_service.dart';
 import 'package:CertNodes/src/signup.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:io';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'Widget/bezierContainer.dart';
 import 'map.dart';
@@ -18,6 +20,41 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String _emailError = '';
+  String _passwordError = '';
+  final _formKey = GlobalKey<FormState>();
+
+  String emailValidator(String value) {
+    if (!value.contains('@')) {
+      setState(() {
+        _emailError = 'Invalid email address';
+      });
+
+      print("hello");
+      return _emailError;
+    }
+    setState(() {
+      _emailError = '';
+    });
+
+    return _emailError;
+    ;
+  }
+
+  String passwordValidator(String value) {
+    if (value.length < 6) {
+      setState(() {
+        _passwordError = 'Password should be at least 6 characters';
+      });
+
+      return _passwordError;
+    }
+    setState(() {
+      _passwordError = '';
+    });
+
+    return '';
+  }
 
   Widget _backButton() {
     return InkWell(
@@ -41,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _entryField(String title, TextEditingController controller,
-      {bool isPassword = false}) {
+      {bool isPassword = false, dynamic validator}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -55,12 +92,14 @@ class _LoginPageState extends State<LoginPage> {
             height: 10,
           ),
           TextFormField(
-              controller: controller,
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+            controller: controller,
+            obscureText: isPassword,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                fillColor: Color(0xfff3f3f4),
+                filled: true),
+            validator: validator,
+          ),
         ],
       ),
     );
@@ -242,8 +281,37 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Email", emailController),
-        _entryField("Password", passwordController, isPassword: true),
+        _entryField("Email", emailController, validator: (value) {
+          if (!value.contains('@')) {
+            setState(() {
+              _emailError = 'Invalid email address';
+            });
+
+            print("hello");
+            return _emailError;
+          }
+          setState(() {
+            _emailError = '';
+          });
+
+          return _emailError;
+          ;
+        }),
+        _entryField("Password", passwordController, isPassword: true,
+            validator: (value) {
+          if (value.length < 6) {
+            setState(() {
+              _passwordError = 'Password should be at least 6 characters';
+            });
+
+            return _passwordError;
+          }
+          setState(() {
+            _passwordError = '';
+          });
+
+          return '';
+        }),
       ],
     );
   }
@@ -263,49 +331,63 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: height * .2),
-                  _title(),
-                  SizedBox(height: 50),
-                  _emailPasswordWidget(),
-                  SizedBox(height: 20),
-                  _submitButton(() async {
-                    LoginService()
-                        .login(emailController.text, passwordController.text)
-                        .then(
-                      (value) {
-                        if (value == true) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyMapPage()));
-                        }
-                      },
-                    );
-                  }
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: height * .2),
+                    _title(),
+                    SizedBox(height: 50),
+                    _emailPasswordWidget(),
+                    SizedBox(height: 20),
+                    _submitButton(() async {
+                      _formKey.currentState!.validate();
+                      if (_emailError == '' && _passwordError == '') {
+                        LoginService()
+                            .login(
+                                emailController.text, passwordController.text)
+                            .then(
+                          (value) {
+                            if (value == true) {
+                              welcome(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MyMapPage()));
+                            } else {}
+                          },
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(_emailError + "/n" + _passwordError),
+                          ),
+                        );
+                      }
+                    }
 
-                      // () => {
-                      //       Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //               builder: (context) => MyMapPage()))
-                      //     }
-                      ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    alignment: Alignment.centerRight,
-                    child: Text('Forgot Password ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
-                  ),
-                  _divider(),
-                  _facebookButton(),
-                  SizedBox(height: height * .055),
-                  _createAccountLabel(),
-                ],
+                        // () => {
+                        //       Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => MyMapPage()))
+                        //     }
+                        ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.centerRight,
+                      child: Text('Forgot Password ?',
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w500)),
+                    ),
+                    _divider(),
+                    _facebookButton(),
+                    SizedBox(height: height * .055),
+                    _createAccountLabel(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -314,4 +396,69 @@ class _LoginPageState extends State<LoginPage> {
       ),
     ));
   }
+}
+
+void welcome(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      duration: Duration(
+        seconds: 8,
+      ),
+      content: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            height: 90,
+            decoration: BoxDecoration(
+                color: Color.fromARGB(238, 226, 97, 23),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 48,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Welcome!!",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        "Check your local weather station",
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+              ),
+              child: SvgPicture.asset(
+                "images/bubbles.svg",
+                height: 48,
+                width: 40,
+                color: Color.fromARGB(224, 180, 16, 16),
+              ),
+            ),
+          )
+        ],
+      ),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    ),
+  );
 }
