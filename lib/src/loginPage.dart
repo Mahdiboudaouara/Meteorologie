@@ -24,38 +24,6 @@ class _LoginPageState extends State<LoginPage> {
   String _passwordError = '';
   final _formKey = GlobalKey<FormState>();
 
-  String emailValidator(String value) {
-    if (!value.contains('@')) {
-      setState(() {
-        _emailError = 'Invalid email address';
-      });
-
-      print("hello");
-      return _emailError;
-    }
-    setState(() {
-      _emailError = '';
-    });
-
-    return _emailError;
-    ;
-  }
-
-  String passwordValidator(String value) {
-    if (value.length < 6) {
-      setState(() {
-        _passwordError = 'Password should be at least 6 characters';
-      });
-
-      return _passwordError;
-    }
-    setState(() {
-      _passwordError = '';
-    });
-
-    return '';
-  }
-
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -344,28 +312,20 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     _submitButton(() async {
                       _formKey.currentState!.validate();
-                      if (_emailError == '' && _passwordError == '') {
-                        LoginService()
-                            .login(
-                                emailController.text, passwordController.text)
-                            .then(
-                          (value) {
-                            if (value == true) {
-                              welcome(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyMapPage()));
-                            } else {}
-                          },
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(_emailError + "/n" + _passwordError),
-                          ),
-                        );
-                      }
+
+                      LoginService()
+                          .login(emailController.text, passwordController.text)
+                          .then(
+                        (value) {
+                          if (value == true) {
+                            welcome(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyMapPage()));
+                          } else {}
+                        },
+                      );
                     }
 
                         // () => {

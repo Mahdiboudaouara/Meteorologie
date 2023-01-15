@@ -17,6 +17,10 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  String _emailError = '';
+  String _nameError = '';
+  String _passwordError = '';
+  final _formKey = GlobalKey<FormState>();
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -39,7 +43,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _entryField(String title, TextEditingController controller,
-      {bool isPassword = false}) {
+      {bool isPassword = false, dynamic validator}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -53,12 +57,14 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 10,
           ),
           TextFormField(
-              controller: controller,
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+            controller: controller,
+            obscureText: isPassword,
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                fillColor: Color(0xfff3f3f4),
+                filled: true),
+            validator: validator,
+          )
         ],
       ),
     );
@@ -156,9 +162,51 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("name", nameController),
-        _entryField("Email", emailController),
-        _entryField("Password", passwordController, isPassword: true),
+        _entryField("name", nameController, validator: (value) {
+          if (value.length < 1) {
+            setState(() {
+              _nameError = 'Just write a letter at least';
+            });
+
+            return _nameError;
+          }
+          setState(() {
+            _nameError = '';
+          });
+
+          return '';
+        }),
+        _entryField("Email", emailController, validator: (value) {
+          if (!value.contains('@')) {
+            setState(() {
+              _emailError = 'Invalid email address';
+            });
+
+            print("hello");
+            return _emailError;
+          }
+          setState(() {
+            _emailError = '';
+          });
+
+          return _emailError;
+          ;
+        }),
+        _entryField("Password", passwordController, isPassword: true,
+            validator: (value) {
+          if (value.length < 6) {
+            setState(() {
+              _passwordError = 'Password should be at least 6 characters';
+            });
+
+            return _passwordError;
+          }
+          setState(() {
+            _passwordError = '';
+          });
+
+          return '';
+        }),
       ],
     );
   }
@@ -179,37 +227,41 @@ class _SignUpPageState extends State<SignUpPage> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: height * .2),
-                    _title(),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    _emailPasswordWidget(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _submitButton(() async {
-                      RegisterService()
-                          .register(nameController.text, emailController.text,
-                              passwordController.text)
-                          .then(
-                        (value) {
-                          if (value == true) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
-                          }
-                        },
-                      );
-                    }),
-                    SizedBox(height: height * .14),
-                    _loginAccountLabel(),
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(height: height * .2),
+                      _title(),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      _emailPasswordWidget(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _submitButton(() async {
+                        _formKey.currentState!.validate();
+                        RegisterService()
+                            .register(nameController.text, emailController.text,
+                                passwordController.text)
+                            .then(
+                          (value) {
+                            if (value == true) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()));
+                            }
+                          },
+                        );
+                      }),
+                      SizedBox(height: height * .14),
+                      _loginAccountLabel(),
+                    ],
+                  ),
                 ),
               ),
             ),
